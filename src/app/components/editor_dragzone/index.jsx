@@ -7,6 +7,7 @@ const bx = B({ isFullModifier: false }).with('editor_dragzone');
 
 export default class extends Component {
     state = {
+        k: null,
         imageWidth: 0,
         imageHeight: 0,
         containerWidth: 0,
@@ -15,8 +16,15 @@ export default class extends Component {
     };
 
     componentDidMount() {
+        const {
+            onChangeImageDimmension,
+        } = this.props;
         const image = new Image();
         image.onload = () => {
+            onChangeImageDimmension({
+                width: image.width,
+                height: image.height,
+            });
             this.setState(
                     state => ({
                     ...state,
@@ -34,8 +42,12 @@ export default class extends Component {
             items,
             handlerSize,
             onChangeItemPosition,
+            onChangeK,
         },
         {
+            k,
+            imageWidth,
+            imageHeight,
             containerBounds,
             containerWidth,
             containerHeight,
@@ -49,31 +61,34 @@ export default class extends Component {
                 }}
                 ref={el => this._refreshContainerDimensions(el)}
             >
-                {
-                    items.map(
-                        (item, index) => (
-                            <EditorDragItem
-                                {...item}
-                                number={index + 1}
-                                bounds={containerBounds}
-                                defaultPosition={
-                                    {
-                                        x: !item.x && containerWidth > 0 ? containerWidth / 2: item.x,
-                                        y: !item.y && containerHeight > 0 ? containerHeight / 2: item.y,
-                                    }
-                                }
-                                onChangePosition={
-                                    ({x, y}) => onChangeItemPosition(
-                                        item,
+                { k
+                    ?
+                        items.map(
+                            (item, index) => (
+                                <EditorDragItem
+                                    {...item}
+                                    number={index + 1}
+                                    bounds={containerBounds}
+                                    defaultPosition={
                                         {
-                                            x: Math.ceil(x),
-                                            y: Math.ceil(y),
+                                            x: !item.x && containerWidth > 0 ? containerWidth / 2: item.x * k,
+                                            y: !item.y && containerHeight > 0 ? containerHeight / 2: item.y * k,
                                         }
-                                    )
-                                }
-                            />
+                                    }
+                                    onChangePosition={
+                                        ({x, y}) => onChangeItemPosition(
+                                            item,
+                                            {
+                                                x: Math.ceil(x / k),
+                                                y: Math.ceil(y / k),
+                                            }
+                                        )
+                                    }
+                                />
+                            )
                         )
-                    )
+                    :
+                        null
                 }
             </div>
         );
@@ -98,6 +113,7 @@ export default class extends Component {
                     this.setState(
                         state => ({
                             ...state,
+                            k,
                             containerWidth,
                             containerHeight,
                             containerBounds: {

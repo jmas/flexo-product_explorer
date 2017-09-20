@@ -26,10 +26,7 @@ const init = textareaId => {
     editorsRootElements[textareaId] = rootElement;
     store.subscribe(() => {
         const state = store.getState();
-        textarea.value = JSON.stringify({
-            imageUrl: state.editingImage ? state.editingImage.preview: null,
-            points: state.items.filter(item => !!item),
-        });
+        textarea.value = JSON.stringify(state);
     });
     render(
         createElement(

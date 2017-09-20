@@ -1,7 +1,9 @@
 import * as actionTypes from './action-types';
 
 const defaultState = {
-    editingImage: null,
+    imageUrl: null,
+    imageWidth: 0,
+    imageHeight: 0,
     items: [],
 };
 
@@ -19,9 +21,7 @@ export default (state=defaultState, action) => {
         case actionTypes.EDIT_IMAGE_SUCCESS:
             return {
                 ...state,
-                editingImage: {
-                    preview: action.data.imageUrl,
-                },
+                imageUrl: action.data.imageUrl,
             };
 
         case actionTypes.ADD_ITEM:
@@ -71,6 +71,13 @@ export default (state=defaultState, action) => {
                         return item;
                     })
                 ],
+            };
+
+        case actionTypes.CHANGE_IMAGE_DIMENSION:
+            return {
+                ...state,
+                imageWidth: action.dimensions.width,
+                imageHeight: action.dimensions.height,
             };
 
         default:

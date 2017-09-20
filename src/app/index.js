@@ -5,7 +5,7 @@ import * as actionCreators from './actions';
 
 const mapStateToProps = state => ({
     ...state,
-    editing: !!state.editingImage,
+    editing: !!state.imageUrl,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators(actionCreators, dispatch);

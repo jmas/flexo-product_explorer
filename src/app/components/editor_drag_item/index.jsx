@@ -24,9 +24,6 @@ export default ({
             <div className={bx('number')}>
                 {number}
             </div>
-            <div className={bx('number')}>
-                {name}
-            </div>
         </div>
     </Draggable>
 );

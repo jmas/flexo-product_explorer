@@ -44,3 +44,8 @@ export const changeItem = (item, values) => ({
     item,
     values,
 });
+
+export const changeImageDimmensions = dimensions => ({
+    type: actionTypes.CHANGE_IMAGE_DIMENSION,
+    dimensions,
+});

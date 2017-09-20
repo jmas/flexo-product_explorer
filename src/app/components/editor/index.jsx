@@ -10,11 +10,12 @@ const bx = B({ isFullModifier: false }).with('editor');
 export default ({
     endpoints,
     editing,
-    editingImage,
+    imageUrl,
     items,
     editImage,
     addItem,
     changeItemPosition,
+    changeImageDimmensions,
     changeItem,
     removeItem,
 }) => (
@@ -24,9 +25,10 @@ export default ({
                 <div className={bx('editor')}>
                     <div className={bx('main')}>
                         <EditorDragzone
-                            imageUrl={editingImage.preview}
+                            imageUrl={imageUrl}
                             items={items.filter(item => !!item)}
                             handlerSize={30}
+                            onChangeImageDimmension={changeImageDimmensions}
                             onChangeItemPosition={changeItemPosition}
                         />
                     </div>
